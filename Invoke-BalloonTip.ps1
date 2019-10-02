@@ -52,8 +52,6 @@
         [int]$Duration=1000
     )
 
-    Add-Type -AssemblyName System.Windows.Forms
-
     If (-NOT $global:balloon) {
         $global:balloon = New-Object System.Windows.Forms.NotifyIcon
 
@@ -67,9 +65,6 @@
             Remove-Variable -Name balloon -Scope Global
         })
     }
-
-    #Need an icon for the tray
-    $path = Get-Process -id $pid | Select-Object -ExpandProperty Path
 
     #Extract the icon from the file
     $balloon.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($SysTrayIconPath)
@@ -86,3 +81,6 @@
     Write-Verbose "Ending function"
 
 }
+
+#Add type required in function's parameter
+Add-Type -AssemblyName System.Windows.Forms
